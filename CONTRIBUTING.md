@@ -68,16 +68,9 @@ yarn test
 
 ### Commit message convention
 
-We follow the [conventional commits specification](https://www.conventionalcommits.org/en) for our commit messages:
+Commit messages should start with a single line (no more than 69 characters) concisely describing the change, plus a blank line followed by a more detailed explanation (wrapped at 72 characters) if neccessary.
 
-- `fix`: bug fixes, e.g. fix crash due to deprecated method.
-- `feat`: new features, e.g. add new method to the module.
-- `refactor`: code refactor, e.g. migrate from class components to hooks.
-- `docs`: changes into documentation, e.g. add usage example for the module..
-- `test`: adding or updating tests, e.g. add integration tests using detox.
-- `chore`: tooling changes, e.g. change CI config.
-
-Our pre-commit hooks verify that your commit message matches this format when committing.
+Write your commit message in the imperative: "fix bug" and not "fixed bug" or "fixes bug".
 
 ### Linting and tests
 
