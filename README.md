@@ -1,22 +1,24 @@
-# react-native-cross-platform-settings
-
-Cross-platform implementation of React Native's Settings API
-
 ## Installation
 
 ```sh
-npm install react-native-cross-platform-settings
+yarn add react-native-cross-platform-settings
 ```
 
 ## Usage
 
+React Native provides a Settings API, acting as a persistent key–value data store with synchronous lookup: [https://reactnative.dev/docs/settings](https://reactnative.dev/docs/settings)
+
+However, the Settings API is only available to iOS applications. This package adds Android support, wrapping Android's [SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences) for storage.
+
 ```js
-import { multiply } from 'react-native-cross-platform-settings';
+import { Settings } from 'react-native-cross-platform-settings';
 
-// ...
-
-const result = await multiply(3, 7);
+Settings.set({ name: 'Aaron' });
+Settings.get('name')
+// 'Aaron'
 ```
+
+_Note that the `watchKeys` and `clearWatch` functions are not supported on Android._
 
 ## Contributing
 

@@ -1,7 +1,8 @@
 // example code from https://reactnative.dev/docs/settings
 
 import React, {useState} from 'react';
-import {Button, Settings, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import {Settings} from 'react-native-cross-platform-settings';
 
 const App = () => {
   const [data, setData] = useState(() => Settings.get('data'));
