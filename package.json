@@ -4,7 +4,6 @@
   "description": "Cross-platform implementation of React Native's Settings API",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
-  "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "files": [
