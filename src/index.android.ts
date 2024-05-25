@@ -17,15 +17,26 @@ const SharedPreferences = NativeModules.SharedPreferences
     );
 
 // JSON serialization helpers
-const destructurer = (entry) => ({ key: entry[0], value: entry[1] });
-const transform = (hash, transformer) =>
-  Object.fromEntries(Object.entries(hash).map(destructurer).map(transformer));
+const transformValues = (
+  hash: Map<string, string>,
+  transformer: Function
+): Map<string, any> => {
+  let result = new Map<string, any>();
 
-const serializer = (entry) => [entry.key, JSON.stringify(entry.value)];
-const deserializer = (entry) => [entry.key, JSON.parse(entry.value)];
+  for (const [key, value] of Object.entries(hash)) {
+    result.set(key, transformer(value));
+  }
 
-const serialize = (hash) => transform(hash, serializer);
-const deserialize = (hash) => transform(hash, deserializer);
+  return result;
+};
+
+const serialize = (hash: Map<string, any>): Map<string, string> => {
+  return transformValues(hash, JSON.stringify);
+};
+
+const deserialize = (hash: Map<string, string>): Map<string, any> => {
+  return transformValues(hash, JSON.parse);
+};
 
 /**
  * Memoize data on initialization via the native module's getConstants function.
@@ -35,21 +46,24 @@ const deserialize = (hash) => transform(hash, deserializer);
 const memo = deserialize(SharedPreferences.getConstants());
 
 export const Settings = {
-  get(key) {
-    return memo[key];
+  get(key: string): any {
+    return memo.get(key);
   },
 
-  set(hash) {
-    SharedPreferences.set(serialize(hash));
-    Object.assign(memo, hash);
+  set(hash: Map<string, any>) {
+    SharedPreferences.set(Object.fromEntries(serialize(hash)));
+
+    for (const [key, value] of Object.entries(hash)) {
+      memo.set(key, value);
+    }
   },
 
-  watchKeys(keys, callback) {
+  watchKeys(): number {
     console.warn('Settings.watchKeys is not supported on Android.');
     return -1;
   },
 
-  clearWatch(watchId) {
+  clearWatch() {
     console.warn('Settings.clearWatch is not supported on Android.');
   },
 };
